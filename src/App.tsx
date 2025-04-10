@@ -1,12 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import BottomTabNavigator from '@/navigation/BottomTabNavigator'
+import RootStackNavigator from '@/navigation/RootStackNavigator'
 
 export default function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
-        <BottomTabNavigator />
+        <RootStackNavigator />
       </NavigationContainer>
     </SafeAreaProvider>
   )
