@@ -14,4 +14,16 @@ export interface Timer {
   remainingTime: number // 일시정지 시 남은 시간 기억용
 }
 
+export interface SettingItem {
+  icon: JSX.Element
+  label: string
+  onPress?: () => void
+  rightIcon?: JSX.Element
+}
+
+export interface SettingSection {
+  title?: string
+  items: SettingItem[]
+}
+
 export type GridMode = 'grid' | 'list'

@@ -44,13 +44,15 @@ export const useTimerStore = create<TimerStore>()(
           return {
             timers: state.timers.map((t) => {
               if (t.id !== id || !t.startedAt) return t
+
               const elapsed = Math.floor((now - t.startedAt) / 1000)
               const remaining = Math.max((t.remainingTime ?? t.duration) - elapsed, 0)
+
               return {
                 ...t,
                 isRunning: false,
                 startedAt: null,
-                timeLeft: remaining,
+                remainingTime: remaining, // ✅ 여기에 저장해서 resume 가능하게!
               }
             }),
           }

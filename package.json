@@ -28,7 +28,9 @@
     "react-native-screens": "^4.10.0",
     "react-native-uuid": "^2.0.3",
     "tailwindcss": "^3.4.17",
-    "zustand": "^5.0.3"
+    "zustand": "^5.0.3",
+    "expo-av": "~15.0.2",
+    "expo-notifications": "~0.29.14"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

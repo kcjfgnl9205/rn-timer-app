@@ -1,7 +1,7 @@
 import { useEffect, useState, useLayoutEffect } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { useRoute, useNavigation } from '@react-navigation/native'
-import { Pause, Play, RotateCw, StopCircle, Trash2, Bell, Vibrate } from 'lucide-react-native'
+import { Pause, Play, RotateCw, Trash2, Bell, Vibrate } from 'lucide-react-native'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { formatTime, getRemainingTime } from '@/utils/utils'
 
@@ -70,7 +70,7 @@ export default function TimerDetailScreen() {
       <View className="flex-row space-x-4">
         <TouchableOpacity
           className="bg-white p-4 rounded-full"
-          onPress={() => startTimer(timer.id)}
+          onPress={() => (timer.isRunning ? pauseTimer(timer.id) : startTimer(timer.id))}
         >
           {timer.isRunning ? (
             <Pause size={32} color={timer.color} />
@@ -78,12 +78,7 @@ export default function TimerDetailScreen() {
             <Play size={32} color={timer.color} />
           )}
         </TouchableOpacity>
-        <TouchableOpacity
-          className="bg-white p-4 rounded-full"
-          onPress={() => pauseTimer(timer.id)}
-        >
-          <StopCircle size={32} color={timer.color} />
-        </TouchableOpacity>
+
         <TouchableOpacity
           className="bg-white p-4 rounded-full"
           onPress={() => resetTimer(timer.id)}
