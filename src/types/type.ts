@@ -9,3 +9,5 @@ export interface Timer {
   color: string
   duration: number
 }
+
+export type GridMode = 'grid' | 'list'
