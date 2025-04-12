@@ -12,11 +12,12 @@ type TimerStore = {
   pauseTimer: (id: string) => void
   resetTimer: (id: string) => void
   resetAllTimers: () => void
+  deleteTimer: (id: string) => void
 }
 
 export const useTimerStore = create<TimerStore>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       timers: [],
       mode: 'grid',
       setMode: (mode: GridMode) => set({ mode }),
@@ -68,6 +69,10 @@ export const useTimerStore = create<TimerStore>()(
             startedAt: null,
             timeLeft: t.duration,
           })),
+        })),
+      deleteTimer: (id) =>
+        set((state) => ({
+          timers: state.timers.filter((t) => t.id !== id),
         })),
     }),
     {

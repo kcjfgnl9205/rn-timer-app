@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import BottomTabNavigator from '@/navigation/BottomTabNavigator'
 import TimerCreateScreen from '@/screens/TimerCreateScreen'
+import TimerDetailScreen from '@/screens/TimerDetailScreen'
 import TimerAdd from '@/components/timer/TimerAdd'
 import { RootStackParamList } from '@/types/type'
 
@@ -14,6 +15,11 @@ export default function RootStackNavigator() {
         name="TimerCreate"
         component={TimerCreateScreen}
         options={{ title: '타이머 추가', headerBackTitle: '뒤로', headerRight: () => <TimerAdd /> }}
+      />
+      <Stack.Screen
+        name="TimerDetail"
+        component={TimerDetailScreen}
+        options={{ title: '', headerBackTitle: '뒤로' }}
       />
     </Stack.Navigator>
   )

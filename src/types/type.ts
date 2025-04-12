@@ -1,6 +1,7 @@
 export type RootStackParamList = {
   Tabs: undefined
   TimerCreate: undefined
+  TimerDetail: { id: string }
 }
 
 export interface Timer {
