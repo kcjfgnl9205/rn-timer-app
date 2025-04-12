@@ -1,3 +1,5 @@
+import { Timer } from '@/types/type'
+
 /**
  * 주어진 시/분/초 값에 추가 시간을 더한 후 새로운 시/분/초 값을 계산하여 리턴
  *
@@ -47,4 +49,24 @@ export function formatTime(duration: number) {
   } else {
     return `${mm} : ${ss}`
   }
+}
+
+/**
+ * 주어진 타이머의 현재 남은 시간을 계산
+ *
+ * - 타이머가 실행 중이고 시작 시간이 존재할 경우:
+ *   현재 시간에서 시작 시간을 뺀 경과 시간을 구한 후,전체 남은 시간에서 이를 빼서 남은 시간을 계산
+ *
+ * - 타이머가 실행 중이 아닌 경우:
+ *   저장된 remainingTime 또는 duration을 그대로 반환합니다.
+ *
+ * @param timer - 계산할 대상이 되는 타이머 객체
+ * @returns 현재 시점을 기준으로 한 남은 시간
+ */
+export function getRemainingTime(timer: Timer): number {
+  if (timer.isRunning && timer.startedAt) {
+    const elapsed = Math.floor((Date.now() - timer.startedAt) / 1000)
+    return Math.max((timer.remainingTime ?? timer.duration) - elapsed, 0)
+  }
+  return timer.remainingTime ?? timer.duration
 }

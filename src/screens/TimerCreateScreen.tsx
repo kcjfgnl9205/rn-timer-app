@@ -7,6 +7,7 @@ import TimePickerGroup from '@/components/timer/TimePickerGroup'
 import TimeQuickAddButtons from '@/components/timer/TimeQuickAddButtons'
 import ColorPicker from '@/components/timer/ColorPicker'
 import { addSecondsToTime } from '@/utils/utils'
+import { Timer } from '@/types/type'
 
 const COLORS = ['#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6', '#EC4899']
 
@@ -26,11 +27,12 @@ export default function TimerCreateScreen() {
     }
 
     const duration = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds)
-    const newTimer = {
+    const newTimer: Timer = {
       id: uuid.v4() as string,
       title,
       color,
       duration,
+      remainingTime: duration,
     }
 
     addTimer(newTimer)

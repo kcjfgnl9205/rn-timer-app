@@ -1,8 +1,7 @@
 import { View, FlatList } from 'react-native'
 import { useTimerStore } from '@/stores/useTimerStore'
 import GridToolbar from '@/components/timer/GridToolbar'
-import TimerGrid from '@/components/timer/TimerGrid'
-import TimerList from '@/components/timer/TimerList'
+import TimerCard from '@/components/timer/TimerCard'
 
 export default function TimerScreen() {
   const timers = useTimerStore((s) => s.timers)
@@ -21,17 +20,11 @@ export default function TimerScreen() {
           contentContainerStyle={{ paddingBottom: 80 }}
           columnWrapperStyle={mode === 'grid' ? { justifyContent: 'space-between' } : undefined}
           keyExtractor={(item) => item.id}
-          renderItem={({ item, index }) => {
-            return mode === 'grid' ? (
-              <View className={`basis-1/2 p-1`}>
-                <TimerGrid item={item} />
-              </View>
-            ) : (
-              <View className="p-1">
-                <TimerList item={item} />
-              </View>
-            )
-          }}
+          renderItem={({ item, index }) => (
+            <View className={`${mode === 'grid' ? 'basis-1/2 p-1' : 'p-1'}`} key={index}>
+              <TimerCard mode={mode} item={item} />
+            </View>
+          )}
         />
       </View>
     </View>

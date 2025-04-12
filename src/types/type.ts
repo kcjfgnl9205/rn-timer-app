@@ -8,6 +8,9 @@ export interface Timer {
   title: string
   color: string
   duration: number
+  startedAt?: number | null // 타이머 시작한 timestamp (Date.now())
+  isRunning?: boolean // 실행중인지
+  remainingTime: number // 일시정지 시 남은 시간 기억용
 }
 
 export type GridMode = 'grid' | 'list'
