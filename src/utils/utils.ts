@@ -52,6 +52,23 @@ export function formatTime(duration: number) {
 }
 
 /**
+ * 밀리초 값을 받아서 MM:SS.ms 형식으로 문자열을 반환합니다.
+ *
+ * @param ms - ms 단위의 전체 시간
+ * @returns 포맷된 문자열 (string)
+ */
+export function formatTimeStopWatch(ms: number) {
+  const totalSeconds = Math.floor(ms / 1000)
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+  const milliseconds = ms % 1000
+  const msHundreds = Math.floor(milliseconds / 10)
+  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(
+    msHundreds
+  ).padStart(2, '0')}`
+}
+
+/**
  * 주어진 타이머의 현재 남은 시간을 계산
  *
  * - 타이머가 실행 중이고 시작 시간이 존재할 경우:
