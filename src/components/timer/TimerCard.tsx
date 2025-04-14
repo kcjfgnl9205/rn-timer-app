@@ -1,18 +1,15 @@
 import { useState, useEffect, useRef } from 'react'
 import { View, Text, TouchableOpacity, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { Play, Pause, RotateCw } from 'lucide-react-native'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { formatTime, getRemainingTime } from '@/utils/utils'
-import { GridMode, Timer, RootStackParamList } from '@/types/type'
+import { GridMode, Timer, Navigation } from '@/types/type'
 
 interface Props {
   mode: GridMode
   item: Timer
 }
-
-type Navigation = NativeStackNavigationProp<RootStackParamList, 'TimerCreate'>
 
 export default function TimerCard({ mode, item }: Props) {
   const navigation = useNavigation<Navigation>()

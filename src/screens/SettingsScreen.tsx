@@ -1,17 +1,15 @@
-import { View, Switch, FlatList } from 'react-native'
-import { Bell, Vibrate, BellDot, Settings, Headset, Info } from 'lucide-react-native'
+import { View, Text } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { Bell, Vibrate, BellDot, Settings, Headset, Info, ChevronRight } from 'lucide-react-native'
 import { useSettingsStore } from '@/stores/useSettingsStore'
-import SectionCard from '@/components/settings/SettingCard'
-import { SettingSection } from '@/types/type'
+import SettingContainer from '@/components/settings/SettingContainer'
+import { Navigation, SettingSection } from '@/types/type'
 
 export default function SettingsScreen() {
-  const vibration = useSettingsStore((s) => s.globalVibration)
-  const sound = useSettingsStore((s) => s.globalSound)
-  const push = useSettingsStore((s) => s.globalPush)
-
-  const setVibration = useSettingsStore((s) => s.setGlobalVibration)
-  const setSound = useSettingsStore((s) => s.setGlobalSound)
-  const setPush = useSettingsStore((s) => s.setGlobalPush)
+  const navigation = useNavigation<Navigation>()
+  const vibration = useSettingsStore((s) => s.vibration)
+  const sound = useSettingsStore((s) => s.sound)
+  const push = useSettingsStore((s) => s.push)
 
   const sections: SettingSection[] = [
     {
@@ -21,37 +19,34 @@ export default function SettingsScreen() {
           icon: <Vibrate size={20} color="#000" />,
           label: '진동 알림',
           rightIcon: (
-            <Switch
-              value={vibration}
-              onValueChange={setVibration}
-              trackColor={{ true: '#06b6d4', false: '#ccc' }}
-              thumbColor="#fff"
-            />
+            <View className="flex-row gap-4 items-center">
+              <Text>{vibration.enabled ? `ON (${vibration.value})` : 'OFF'} </Text>
+              <ChevronRight size={24} color="#000" />
+            </View>
           ),
+          onPress: () => navigation.navigate('VibrationSetting'),
         },
         {
           icon: <Bell size={20} color="#000" />,
           label: '소리 알림',
           rightIcon: (
-            <Switch
-              value={sound}
-              onValueChange={setSound}
-              trackColor={{ true: '#06b6d4', false: '#ccc' }}
-              thumbColor="#fff"
-            />
+            <View className="flex-row gap-4 items-center">
+              <Text>{sound.enabled ? `ON (${sound.value})` : 'OFF'} </Text>
+              <ChevronRight size={24} color="#000" />
+            </View>
           ),
+          onPress: () => navigation.navigate('SoundSetting'),
         },
         {
           icon: <BellDot size={20} color="#000" />,
           label: '푸시 알림',
           rightIcon: (
-            <Switch
-              value={push}
-              onValueChange={setPush}
-              trackColor={{ true: '#06b6d4', false: '#ccc' }}
-              thumbColor="#fff"
-            />
+            <View className="flex-row gap-4 items-center">
+              <Text>{push.enabled ? `ON (${push.value})` : 'OFF'} </Text>
+              <ChevronRight size={24} color="#000" />
+            </View>
           ),
+          onPress: () => navigation.navigate('PushSetting'),
         },
       ],
     },
@@ -82,16 +77,5 @@ export default function SettingsScreen() {
     },
   ]
 
-  return (
-    <View className="flex-1 items-center justify-center bg-white py-2">
-      <FlatList
-        data={sections}
-        renderItem={({ item, index }) => (
-          <View className="p-1" key={index}>
-            <SectionCard title={item?.title} items={item.items} />
-          </View>
-        )}
-      />
-    </View>
-  )
+  return <SettingContainer items={sections} />
 }

@@ -1,8 +1,15 @@
+import { NativeStackNavigationProp } from '@react-navigation/native-stack'
+
 export type RootStackParamList = {
   Tabs: undefined
   TimerCreate: undefined
   TimerDetail: { id: string }
+  VibrationSetting: undefined
+  SoundSetting: undefined
+  PushSetting: undefined
 }
+
+export type Navigation = NativeStackNavigationProp<RootStackParamList, any>
 
 export interface Timer {
   id: string
@@ -15,7 +22,7 @@ export interface Timer {
 }
 
 export interface SettingItem {
-  icon: JSX.Element
+  icon?: JSX.Element
   label: string
   onPress?: () => void
   rightIcon?: JSX.Element
@@ -27,3 +34,25 @@ export interface SettingSection {
 }
 
 export type GridMode = 'grid' | 'list'
+
+// 진동 옵션
+export type VibrationType =
+  | '기본'
+  | '가벼움'
+  | '중간'
+  | '강함'
+  | '단단함'
+  | '부드러움'
+  | '성공'
+  | '경고'
+  | '오류'
+
+// 벨소리 옵션
+export type SoundType =
+  | '기본'
+  | '벨소리1'
+  | '벨소리2'
+  | '벨소리3'
+  | '벨소리4'
+  | '벨소리5'
+  | '벨소리6'

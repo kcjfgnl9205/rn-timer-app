@@ -1,10 +1,7 @@
 import { Pressable, View } from 'react-native'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 import { useNavigation } from '@react-navigation/native'
 import { Plus } from 'lucide-react-native'
-import { RootStackParamList } from '@/types/type'
-
-type Navigation = NativeStackNavigationProp<RootStackParamList, 'TimerCreate'>
+import { Navigation } from '@/types/type'
 
 export default function TimerCreate() {
   const navigation = useNavigation<Navigation>()

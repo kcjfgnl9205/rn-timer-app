@@ -1,4 +1,6 @@
-import { Timer } from '@/types/type'
+import { Audio } from 'expo-av'
+import { SOUND_MAP } from '@/consts/const'
+import { SoundType, Timer } from '@/types/type'
 
 /**
  * 주어진 시/분/초 값에 추가 시간을 더한 후 새로운 시/분/초 값을 계산하여 리턴
@@ -86,4 +88,20 @@ export function getRemainingTime(timer: Timer): number {
     return Math.max((timer.remainingTime ?? timer.duration) - elapsed, 0)
   }
   return timer.remainingTime ?? timer.duration
+}
+
+/**
+ * 벨소리 재생
+ *
+ * @param label - 벨소리 이름
+ * @returns
+ */
+export async function playSound(label: SoundType) {
+  const { sound } = await Audio.Sound.createAsync(SOUND_MAP[label])
+  await sound.playAsync()
+  sound.setOnPlaybackStatusUpdate((status) => {
+    if (status.isLoaded && status.didJustFinish) {
+      sound.unloadAsync()
+    }
+  })
 }

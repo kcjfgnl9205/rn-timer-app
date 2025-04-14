@@ -1,8 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native'
-import { ChevronRight } from 'lucide-react-native'
 
 interface Props {
-  icon: JSX.Element
+  icon?: JSX.Element
   label: string
   onPress?: () => void
   rightIcon?: JSX.Element
@@ -23,8 +22,7 @@ export default function SettingCardItem({ icon, label, onPress, rightIcon }: Pro
         <Text className="text-black">{label}</Text>
       </View>
 
-      {/* 오른쪽 요소: 기본은 ChevronRight */}
-      <View>{isPressable && !rightIcon ? <ChevronRight size={16} color="#aaa" /> : rightIcon}</View>
+      <View>{rightIcon}</View>
     </Container>
   )
 }
