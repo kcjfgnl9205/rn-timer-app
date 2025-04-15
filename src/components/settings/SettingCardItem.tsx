@@ -14,7 +14,7 @@ export default function SettingCardItem({ icon, label, onPress, rightIcon }: Pro
   return (
     <Container
       onPress={onPress}
-      className="flex-row items-center justify-between px-4 py-3 w-full"
+      className="flex-row items-center justify-between w-full px-4 py-1"
       disabled={!isPressable}
     >
       <View className="flex-row items-center gap-2">

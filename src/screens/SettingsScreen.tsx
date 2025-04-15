@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native'
 import { Bell, Vibrate, BellDot, Settings, Headset, Info, ChevronRight } from 'lucide-react-native'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import SettingContainer from '@/components/settings/SettingContainer'
+import SettingIcon from '@/components/settings/SettingIcon'
 import { Navigation, SettingSection } from '@/types/type'
 
 export default function SettingsScreen() {
@@ -16,7 +17,7 @@ export default function SettingsScreen() {
       title: '알림 설정',
       items: [
         {
-          icon: <Vibrate size={20} color="#000" />,
+          icon: <SettingIcon icon={Vibrate} />,
           label: '진동 알림',
           rightIcon: (
             <View className="flex-row gap-4 items-center">
@@ -27,7 +28,7 @@ export default function SettingsScreen() {
           onPress: () => navigation.navigate('VibrationSetting'),
         },
         {
-          icon: <Bell size={20} color="#000" />,
+          icon: <SettingIcon icon={Bell} />,
           label: '소리 알림',
           rightIcon: (
             <View className="flex-row gap-4 items-center">
@@ -38,7 +39,7 @@ export default function SettingsScreen() {
           onPress: () => navigation.navigate('SoundSetting'),
         },
         {
-          icon: <BellDot size={20} color="#000" />,
+          icon: <SettingIcon icon={BellDot} />,
           label: '푸시 알림',
           rightIcon: (
             <View className="flex-row gap-4 items-center">
@@ -54,7 +55,7 @@ export default function SettingsScreen() {
       title: '설정',
       items: [
         {
-          icon: <Settings size={20} color="#000" />,
+          icon: <SettingIcon icon={Settings} />,
           label: '설정',
           onPress: () => {},
         },
@@ -64,12 +65,12 @@ export default function SettingsScreen() {
       title: '문의하기',
       items: [
         {
-          icon: <Headset size={20} color="#000" />,
+          icon: <SettingIcon icon={Headset} />,
           label: '자주 있는 질문',
           onPress: () => {},
         },
         {
-          icon: <Info size={20} color="#000" />,
+          icon: <SettingIcon icon={Info} />,
           label: '서비스 이용약관',
           onPress: () => {},
         },
