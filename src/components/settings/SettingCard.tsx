@@ -10,7 +10,7 @@ interface Props {
 export default function SettingCard({ title, items }: Props) {
   return (
     <View className="mx-1">
-      {title && <Text className="text-black font-bold text-sm mb-2 px-1">{title}</Text>}
+      {title && <Text className="text-black font-bold text-lg mb-2 px-2">{title}</Text>}
       <View className="flex-col bg-neutral-100 rounded-xl w-full py-1">
         {items.map((item, index) => (
           <SettingCardItem key={index} {...item} />

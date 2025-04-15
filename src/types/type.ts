@@ -25,6 +25,7 @@ export interface Timer {
 export interface SettingItem {
   icon?: JSX.Element
   label: string
+  subLabel?: string
   onPress?: () => void
   rightIcon?: JSX.Element
 }

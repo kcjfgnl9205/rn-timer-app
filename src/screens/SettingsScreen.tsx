@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { Bell, Vibrate, BellDot, Settings, Headset, Info, ChevronRight } from 'lucide-react-native'
+import { Bell, Vibrate, BellRing, ChevronRight } from 'lucide-react-native'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import SettingContainer from '@/components/settings/SettingContainer'
 import SettingIcon from '@/components/settings/SettingIcon'
@@ -20,6 +20,7 @@ export default function SettingsScreen() {
         {
           icon: <SettingIcon icon={Vibrate} />,
           label: '진동 알림',
+          subLabel: '타이머 종료 시 진동으로 알림',
           rightIcon: (
             <View className="flex-row gap-4 items-center">
               <Text>{vibration.enabled ? `ON (${vibration.value})` : 'OFF'} </Text>
@@ -31,6 +32,7 @@ export default function SettingsScreen() {
         {
           icon: <SettingIcon icon={Bell} />,
           label: '소리 알림',
+          subLabel: '타이머 종료 시 소리로 알림',
           rightIcon: (
             <View className="flex-row gap-4 items-center">
               <Text>{sound.enabled ? `ON (${sound.value})` : 'OFF'} </Text>
@@ -40,8 +42,9 @@ export default function SettingsScreen() {
           onPress: () => navigation.navigate('SoundSetting'),
         },
         {
-          icon: <SettingIcon icon={BellDot} />,
+          icon: <SettingIcon icon={BellRing} />,
           label: '푸시 알림',
+          subLabel: '앱이 닫혀 있을 때도 알림 받기',
           rightIcon: (
             <View className="flex-row gap-4 items-center">
               <Text>{push.enabled ? `ON (${push.value})` : 'OFF'} </Text>
@@ -49,31 +52,6 @@ export default function SettingsScreen() {
             </View>
           ),
           onPress: () => navigation.navigate('PushSetting'),
-        },
-      ],
-    },
-    {
-      title: '설정',
-      items: [
-        {
-          icon: <SettingIcon icon={Settings} />,
-          label: '설정',
-          onPress: () => {},
-        },
-      ],
-    },
-    {
-      title: '문의하기',
-      items: [
-        {
-          icon: <SettingIcon icon={Headset} />,
-          label: '자주 있는 질문',
-          onPress: () => {},
-        },
-        {
-          icon: <SettingIcon icon={Info} />,
-          label: '서비스 이용약관',
-          onPress: () => {},
         },
       ],
     },
