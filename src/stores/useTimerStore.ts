@@ -47,31 +47,59 @@ export const useTimerStore = create<TimerStore>()(
 
               const elapsed = Math.floor((now - t.startedAt) / 1000)
               const remaining = Math.max((t.remainingTime ?? t.duration) - elapsed, 0)
+              const added = Math.min(elapsed, t.remainingTime ?? t.duration)
 
               return {
                 ...t,
                 isRunning: false,
                 startedAt: null,
                 remainingTime: remaining, // ✅ 여기에 저장해서 resume 가능하게!
+                totalTime: (t.totalTime ?? 0) + added, // ✅ 누적 시간
               }
             }),
           }
         }),
       resetTimer: (id) =>
-        set((state) => ({
-          timers: state.timers.map((t) =>
-            t.id === id ? { ...t, remainingTime: t.duration, isRunning: false } : t
-          ),
-        })),
+        set((state) => {
+          const now = Date.now()
+          return {
+            timers: state.timers.map((t) => {
+              if (t.id !== id || !t.startedAt) return t
+
+              const elapsed = Math.floor((now - t.startedAt) / 1000)
+              const added = Math.min(elapsed, t.remainingTime ?? t.duration)
+
+              return {
+                ...t,
+                isRunning: false,
+                startedAt: null,
+                remainingTime: t.duration,
+                totalTime: (t.totalTime ?? 0) + added,
+              }
+            }),
+          }
+        }),
       resetAllTimers: () =>
-        set((state) => ({
-          timers: state.timers.map((t) => ({
-            ...t,
-            isRunning: false,
-            startedAt: null,
-            timeLeft: t.duration,
-          })),
-        })),
+        set((state) => {
+          const now = Date.now()
+
+          return {
+            timers: state.timers.map((t) => {
+              if (!t.isRunning || !t.startedAt) return t
+
+              const elapsed = Math.floor((now - t.startedAt) / 1000)
+              const added = Math.min(elapsed, t.remainingTime ?? t.duration)
+
+              return {
+                ...t,
+                isRunning: false,
+                startedAt: null,
+                remainingTime: t.duration,
+                totalTime: (t.totalTime ?? 0) + added,
+              }
+            }),
+          }
+        }),
       deleteTimer: (id) =>
         set((state) => ({
           timers: state.timers.filter((t) => t.id !== id),
