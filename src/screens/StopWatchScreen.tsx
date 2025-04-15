@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { View, Text, TouchableOpacity, AppState, AppStateStatus, FlatList } from 'react-native'
+import { View, TouchableOpacity, AppState, AppStateStatus, FlatList } from 'react-native'
 import { RotateCw, Pause, Play, Disc2 } from 'lucide-react-native'
+import { Text } from '@/components/common/Text'
 import { formatTimeStopWatch } from '@/utils/utils'
 
 export default function StopWatchScreen() {

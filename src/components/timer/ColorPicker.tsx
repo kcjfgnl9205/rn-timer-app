@@ -1,4 +1,5 @@
-import { FlatList, TouchableOpacity, View, Text } from 'react-native'
+import { FlatList, TouchableOpacity, View } from 'react-native'
+import { Text } from '@/components/common/Text'
 
 interface Props {
   color: string

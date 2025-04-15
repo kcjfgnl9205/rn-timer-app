@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
-import { View, Text, TouchableOpacity, Pressable } from 'react-native'
+import { View, TouchableOpacity, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Play, Pause, RotateCw } from 'lucide-react-native'
 import { useTimerStore } from '@/stores/useTimerStore'
+import { Text } from '@/components/common/Text'
 import { formatTime, getRemainingTime } from '@/utils/utils'
 import { GridMode, Timer, Navigation } from '@/types/type'
 

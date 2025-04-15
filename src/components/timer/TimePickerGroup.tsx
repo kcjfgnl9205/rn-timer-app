@@ -1,5 +1,6 @@
-import { Platform, View, Text } from 'react-native'
+import { Platform, View } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
+import { Text } from '@/components/common/Text'
 
 interface Props {
   hours: string

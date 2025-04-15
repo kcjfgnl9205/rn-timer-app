@@ -1,11 +1,12 @@
 import { useLayoutEffect, useState } from 'react'
-import { View, TextInput, Alert, Text, TouchableOpacity } from 'react-native'
+import { View, TextInput, Alert, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import uuid from 'react-native-uuid'
 import { useTimerStore } from '@/stores/useTimerStore'
 import TimePickerGroup from '@/components/timer/TimePickerGroup'
 import TimeQuickAddButtons from '@/components/timer/TimeQuickAddButtons'
 import ColorPicker from '@/components/timer/ColorPicker'
+import { Text } from '@/components/common/Text'
 import { addSecondsToTime } from '@/utils/utils'
 import { Timer } from '@/types/type'
 
@@ -33,6 +34,7 @@ export default function TimerCreateScreen() {
       color,
       duration,
       remainingTime: duration,
+      totalTime: 0,
     }
 
     addTimer(newTimer)
@@ -58,7 +60,7 @@ export default function TimerCreateScreen() {
 
   return (
     <View className="flex-1 bg-white p-6">
-      <Text className="text-base mb-2">타이머 제목</Text>
+      <Text className="text-base mb-2">타이머 제목 폰트</Text>
       <TextInput
         className="border border-gray-300 rounded-lg px-4 py-2 mb-8"
         placeholder="예: 공부 타이머"

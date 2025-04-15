@@ -1,7 +1,8 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import { Grid, List } from 'lucide-react-native'
 import { useTimerStore } from '@/stores/useTimerStore'
+import { Text } from '@/components/common/Text'
 import { GridMode } from '@/types/type'
 
 interface Props {

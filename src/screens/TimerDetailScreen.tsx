@@ -1,8 +1,9 @@
 import { useEffect, useState, useLayoutEffect } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity } from 'react-native'
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { Pause, Play, RotateCw, Trash2, Bell, Vibrate } from 'lucide-react-native'
 import { useTimerStore } from '@/stores/useTimerStore'
+import { Text } from '@/components/common/Text'
 import { formatTime, getRemainingTime } from '@/utils/utils'
 
 export default function TimerDetailScreen() {

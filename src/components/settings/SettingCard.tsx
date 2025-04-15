@@ -1,5 +1,6 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import SettingCardItem from '@/components/settings/SettingCardItem'
+import { Text } from '@/components/common/Text'
 import { SettingItem } from '@/types/type'
 
 interface Props {

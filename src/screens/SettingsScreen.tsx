@@ -1,9 +1,10 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Bell, Vibrate, BellDot, Settings, Headset, Info, ChevronRight } from 'lucide-react-native'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import SettingContainer from '@/components/settings/SettingContainer'
 import SettingIcon from '@/components/settings/SettingIcon'
+import { Text } from '@/components/common/Text'
 import { Navigation, SettingSection } from '@/types/type'
 
 export default function SettingsScreen() {
