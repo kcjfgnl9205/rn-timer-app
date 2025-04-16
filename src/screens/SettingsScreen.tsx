@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { Bell, Vibrate, BellRing, ChevronRight } from 'lucide-react-native'
+import { Bell, Vibrate, BellRing, ChevronRight, Info } from 'lucide-react-native'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import SettingContainer from '@/components/settings/SettingContainer'
 import SettingIcon from '@/components/settings/SettingIcon'

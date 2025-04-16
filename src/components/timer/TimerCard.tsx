@@ -1,20 +1,18 @@
 import { useState, useEffect, useRef } from 'react'
-import { View, TouchableOpacity, Pressable } from 'react-native'
+import { View, TouchableOpacity, Pressable, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Play, Pause, RotateCw } from 'lucide-react-native'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { Text } from '@/components/common/Text'
 import { formatTime, getRemainingTime } from '@/utils/utils'
-import { GridMode, Timer, Navigation } from '@/types/type'
+import { Timer, Navigation } from '@/types/type'
 
 interface Props {
-  mode: GridMode
   item: Timer
 }
 
-export default function TimerCard({ mode, item }: Props) {
+export default function TimerCard({ item }: Props) {
   const navigation = useNavigation<Navigation>()
-  const isGrid = mode === 'grid'
   const { startTimer, pauseTimer, resetTimer } = useTimerStore()
 
   const [_, forceUpdate] = useState(0) // 리렌더링 유도용 상태
@@ -37,41 +35,65 @@ export default function TimerCard({ mode, item }: Props) {
     }
   }, [item.isRunning])
 
+  useEffect(() => {
+    if (remainingTime <= 0 && item.isRunning) {
+      console.log(`⏰ 타이머 끝남: ${item.title}`)
+      pauseTimer(item.id) // 일단 정지시키고
+      Alert.alert(
+        '타이머 종료',
+        `"${item.title}" 타이머가 끝났어요.`,
+        [
+          {
+            text: '확인',
+            onPress: () => {
+              resetTimer(item.id)
+            },
+          },
+        ],
+        { cancelable: false }
+      )
+    }
+  }, [remainingTime, item.isRunning])
+
   return (
     <Pressable onPress={() => navigation.navigate('TimerDetail', { id: item.id })}>
-      <View
-        className={`
-        ${isGrid ? 'flex-col gap-2 p-3' : 'flex-row justify-between items-center px-6 py-4'}
-        rounded-xl
-      `}
-        style={{ backgroundColor: item.color }}
-      >
-        <View className={`${isGrid ? '' : 'flex-1 pr-4'}`}>
-          <Text className="text-white font-semibold text-sm" numberOfLines={1}>
-            {item.title}
-          </Text>
-          <Text className="text-white font-bold text-3xl text-center">
-            {formatTime(remainingTime)}
-          </Text>
-        </View>
+      <View className="flex-row justify-between items-center  relative border-b-[1px] border-neutral-200 ">
+        <View
+          className={`absolute top-0 left-0 w-full h-full ${
+            item.isRunning ? 'bg-neutral-100' : 'bg-transparent'
+          } `}
+        />
 
-        <View className="flex-row gap-2 justify-center">
-          <TouchableOpacity
-            className="bg-white p-2 rounded-full"
-            onPress={() => (item.isRunning ? pauseTimer(item.id) : startTimer(item.id))}
-          >
-            {item.isRunning ? (
-              <Pause size={20} color={item.color} />
-            ) : (
-              <Play size={20} color={item.color} />
+        <View className="flex-1 flex-row w-full justify-between py-4 items-center px-4">
+          <View>
+            <Text className="text-neutral-600 font-semibold text-base" numberOfLines={1}>
+              {item.title}
+            </Text>
+
+            <Text
+              className="text-neutral-900 font-bold text-3xl"
+              style={{ fontVariant: ['tabular-nums'] }}
+            >
+              {formatTime(remainingTime)}
+            </Text>
+          </View>
+
+          <View className="flex-row gap-2 justify-center">
+            {!item.isRunning && remainingTime < item.duration && (
+              <TouchableOpacity
+                className="border-[1px] border-neutral-200 p-4 rounded-full"
+                onPress={() => resetTimer(item.id)}
+              >
+                <RotateCw size={20} color="#000" />
+              </TouchableOpacity>
             )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            className="bg-white p-2 rounded-full"
-            onPress={() => resetTimer(item.id)}
-          >
-            <RotateCw size={20} color={item.color} />
-          </TouchableOpacity>
+            <TouchableOpacity
+              className="border-[1px] border-neutral-200 p-4 rounded-full"
+              onPress={() => (item.isRunning ? pauseTimer(item.id) : startTimer(item.id))}
+            >
+              {item.isRunning ? <Pause size={20} color="#000" /> : <Play size={20} color="#000" />}
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Pressable>

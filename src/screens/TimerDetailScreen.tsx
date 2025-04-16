@@ -25,11 +25,8 @@ export default function TimerDetailScreen() {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      headerStyle: {
-        backgroundColor: timer.color,
-      },
       headerShadowVisible: false,
-      headerTintColor: '#fff', // 아이콘/텍스트 색상
+      headerTintColor: 'blue', // 아이콘/텍스트 색상
       headerTitle: '', // 제목 숨기기
     })
   }, [navigation])
@@ -52,39 +49,35 @@ export default function TimerDetailScreen() {
   }
 
   return (
-    <View className={`flex-1 justify-center items-center`} style={{ backgroundColor: timer.color }}>
+    <View className={`flex-1 justify-center items-center bg-white`}>
       <View className="absolute top-2 left-4 right-4 flex-row justify-between z-10 ">
         <TouchableOpacity onPress={handleDelete}>
-          <Trash2 size={24} color="white" />
+          <Trash2 size={24} color="blue" />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Bell size={24} color="white" />
+          <Bell size={24} color="blue" />
         </TouchableOpacity>
         <TouchableOpacity>
-          <Vibrate size={24} color="white" />
+          <Vibrate size={24} color="blue" />
         </TouchableOpacity>
       </View>
 
-      <Text className="text-white text-2xl font-bold mb-2">{timer.title}</Text>
-      <Text className="text-white text-6xl font-bold mb-6">{formatTime(remainingTime)}</Text>
+      <Text className="text-black text-2xl font-bold mb-2">{timer.title}</Text>
+      <Text className="text-black text-6xl font-bold mb-6">{formatTime(remainingTime)}</Text>
 
       <View className="flex-row space-x-4">
         <TouchableOpacity
           className="bg-white p-4 rounded-full"
           onPress={() => (timer.isRunning ? pauseTimer(timer.id) : startTimer(timer.id))}
         >
-          {timer.isRunning ? (
-            <Pause size={32} color={timer.color} />
-          ) : (
-            <Play size={32} color={timer.color} />
-          )}
+          {timer.isRunning ? <Pause size={32} color="#000" /> : <Play size={32} color="#000" />}
         </TouchableOpacity>
 
         <TouchableOpacity
           className="bg-white p-4 rounded-full"
           onPress={() => resetTimer(timer.id)}
         >
-          <RotateCw size={32} color={timer.color} />
+          <RotateCw size={32} color="#000" />
         </TouchableOpacity>
       </View>
     </View>

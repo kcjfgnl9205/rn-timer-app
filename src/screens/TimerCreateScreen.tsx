@@ -5,12 +5,9 @@ import uuid from 'react-native-uuid'
 import { useTimerStore } from '@/stores/useTimerStore'
 import TimePickerGroup from '@/components/timer/TimePickerGroup'
 import TimeQuickAddButtons from '@/components/timer/TimeQuickAddButtons'
-import ColorPicker from '@/components/timer/ColorPicker'
 import { Text } from '@/components/common/Text'
 import { addSecondsToTime } from '@/utils/utils'
 import { Timer } from '@/types/type'
-
-const COLORS = ['#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6', '#EC4899']
 
 export default function TimerCreateScreen() {
   const navigation = useNavigation()
@@ -18,7 +15,6 @@ export default function TimerCreateScreen() {
   const [hours, setHours] = useState('0')
   const [minutes, setMinutes] = useState('30')
   const [seconds, setSeconds] = useState('0')
-  const [color, setColor] = useState(COLORS[0])
   const addTimer = useTimerStore((s) => s.addTimer)
 
   const handleCreate = () => {
@@ -31,7 +27,6 @@ export default function TimerCreateScreen() {
     const newTimer: Timer = {
       id: uuid.v4() as string,
       title,
-      color,
       duration,
       remainingTime: duration,
       totalTime: 0,
@@ -56,7 +51,7 @@ export default function TimerCreateScreen() {
         </TouchableOpacity>
       ),
     })
-  }, [navigation, title, hours, minutes, seconds, color])
+  }, [navigation, title, hours, minutes, seconds])
 
   return (
     <View className="flex-1 bg-white p-6">
@@ -78,8 +73,6 @@ export default function TimerCreateScreen() {
       />
 
       <TimeQuickAddButtons onAdd={handleAddTime} />
-
-      <ColorPicker color={color} onSelect={setColor} colors={COLORS} />
     </View>
   )
 }

@@ -14,7 +14,6 @@ export type Navigation = NativeStackNavigationProp<RootStackParamList, any>
 export interface Timer {
   id: string
   title: string
-  color: string
   duration: number
   startedAt?: number | null // 타이머 시작한 timestamp (Date.now())
   isRunning?: boolean // 실행중인지
@@ -34,8 +33,6 @@ export interface SettingSection {
   title?: string
   items: SettingItem[]
 }
-
-export type GridMode = 'grid' | 'list'
 
 // 진동 옵션
 export type VibrationType =

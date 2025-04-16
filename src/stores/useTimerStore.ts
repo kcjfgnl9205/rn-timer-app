@@ -1,17 +1,14 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { GridMode, Timer } from '@/types/type'
+import { Timer } from '@/types/type'
 
 type TimerStore = {
   timers: Timer[]
-  mode: GridMode
-  setMode: (mode: GridMode) => void
   addTimer: (timer: Timer) => void
   startTimer: (id: string) => void
   pauseTimer: (id: string) => void
   resetTimer: (id: string) => void
-  resetAllTimers: () => void
   deleteTimer: (id: string) => void
 }
 
@@ -19,8 +16,6 @@ export const useTimerStore = create<TimerStore>()(
   persist(
     (set) => ({
       timers: [],
-      mode: 'grid',
-      setMode: (mode: GridMode) => set({ mode }),
       addTimer: (timer) =>
         set((state) => ({
           timers: [{ ...timer, isRunning: false, remainingTime: timer.duration }, ...state.timers],
@@ -64,31 +59,13 @@ export const useTimerStore = create<TimerStore>()(
           const now = Date.now()
           return {
             timers: state.timers.map((t) => {
-              if (t.id !== id || !t.startedAt) return t
+              if (t.id !== id) return t
 
-              const elapsed = Math.floor((now - t.startedAt) / 1000)
-              const added = Math.min(elapsed, t.remainingTime ?? t.duration)
-
-              return {
-                ...t,
-                isRunning: false,
-                startedAt: null,
-                remainingTime: t.duration,
-                totalTime: (t.totalTime ?? 0) + added,
+              let added = 0
+              if (t.isRunning && t.startedAt) {
+                const elapsed = Math.floor((now - t.startedAt) / 1000)
+                added = Math.min(elapsed, t.remainingTime ?? t.duration)
               }
-            }),
-          }
-        }),
-      resetAllTimers: () =>
-        set((state) => {
-          const now = Date.now()
-
-          return {
-            timers: state.timers.map((t) => {
-              if (!t.isRunning || !t.startedAt) return t
-
-              const elapsed = Math.floor((now - t.startedAt) / 1000)
-              const added = Math.min(elapsed, t.remainingTime ?? t.duration)
 
               return {
                 ...t,
