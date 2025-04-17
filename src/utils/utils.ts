@@ -105,3 +105,21 @@ export async function playSound(label: SoundType) {
     }
   })
 }
+
+/**
+ * 타이머 원을 그리는 패스
+ *
+ * @param r  - 반지름
+ * @param strokeWidth  - 테두리
+ * @returns
+ */
+export function getCirclePath(r: number, strokeWidth: number) {
+  const offset = strokeWidth / 2
+  const cx = r + offset
+  const cy = r + offset
+  return `
+    M ${cx + r},${cy}
+    A ${r},${r} 0 1,0 ${cx - r},${cy}
+    A ${r},${r} 0 1,0 ${cx + r},${cy}
+  `
+}

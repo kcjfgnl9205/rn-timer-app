@@ -65,20 +65,20 @@ export default function TimerCard({ item }: Props) {
         />
 
         <View className="flex-1 flex-row w-full justify-between py-4 items-center px-4">
-          <View>
+          <View className="mr-32">
             <Text className="text-neutral-600 font-semibold text-base" numberOfLines={1}>
               {item.title}
             </Text>
 
             <Text
-              className="text-neutral-900 font-bold text-3xl"
+              className="text-neutral-900 font-bold text-3xl "
               style={{ fontVariant: ['tabular-nums'] }}
             >
               {formatTime(remainingTime)}
             </Text>
           </View>
 
-          <View className="flex-row gap-2 justify-center">
+          <View className="flex-1 flex-row gap-2 justify-end">
             {!item.isRunning && remainingTime < item.duration && (
               <TouchableOpacity
                 className="border-[1px] border-neutral-200 p-4 rounded-full"
