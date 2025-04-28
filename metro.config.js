@@ -1,5 +1,6 @@
 const { getDefaultConfig } = require('expo/metro-config')
 const { withNativeWind } = require('nativewind/metro')
+const { wrapWithReanimatedMetroConfig } = require('react-native-reanimated/metro-config')
 
 const config = getDefaultConfig(__dirname)
 config.transformer.assetPlugins = ['expo-asset/tools/hashAssetFiles']
@@ -8,4 +9,4 @@ config.transformer.babelTransformerPath = require.resolve('react-native-svg-tran
 config.resolver.assetExts = config.resolver.assetExts.filter((ext) => ext !== 'svg')
 config.resolver.sourceExts.push('svg')
 
-module.exports = withNativeWind(config, { input: './global.css' })
+module.exports = wrapWithReanimatedMetroConfig(withNativeWind(config, { input: './global.css' }))
