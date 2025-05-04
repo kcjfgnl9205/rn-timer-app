@@ -1,21 +1,43 @@
-import { View } from 'react-native'
-import SettingCardItem from '@/components/settings/SettingCardItem'
+import { View, TouchableOpacity } from 'react-native'
 import { Text } from '@/components/common/Text'
-import { SettingItem } from '@/types/type'
+import { useSettingsStore } from '@/stores/useSettingsStore'
+import { getColors } from '@/theme/colors'
 
 interface Props {
-  title?: string
-  items: SettingItem[]
+  icon?: JSX.Element
+  label: string
+  subLabel?: string
+  onPress?: () => void
+  rightIcon?: JSX.Element
 }
-export default function SettingCard({ title, items }: Props) {
+
+export default function SettingCard({ icon, label, subLabel, onPress, rightIcon }: Props) {
+  const isPressable = typeof onPress === 'function'
+  const Container = isPressable ? TouchableOpacity : View
+  const colorScheme = useSettingsStore((s) => s.colorScheme)
+  const colors = getColors(colorScheme)
+
   return (
-    <View className="mx-1">
-      {title && <Text className="text-black font-bold text-lg mb-2 px-2">{title}</Text>}
-      <View className="flex-col bg-neutral-100 rounded-xl w-full py-1">
-        {items.map((item, index) => (
-          <SettingCardItem key={index} {...item} />
-        ))}
+    <Container
+      onPress={onPress}
+      className="flex-row items-center justify-between w-full px-4 py-4"
+      disabled={!isPressable}
+    >
+      <View className="flex-row items-center gap-2">
+        {icon}
+        <View>
+          <Text className="text-lg" style={{ color: colors.text }}>
+            {label}
+          </Text>
+          {subLabel && (
+            <Text className="text-base" style={{ color: colors.subText }}>
+              {subLabel}
+            </Text>
+          )}
+        </View>
       </View>
-    </View>
+
+      {rightIcon}
+    </Container>
   )
 }

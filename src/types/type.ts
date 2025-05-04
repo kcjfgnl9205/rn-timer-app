@@ -4,9 +4,6 @@ export type RootStackParamList = {
   Tabs: undefined
   TimerCreate: undefined
   TimerDetail: { id: string }
-  VibrationSetting: undefined
-  SoundSetting: undefined
-  PushSetting: undefined
 }
 
 export type Navigation = NativeStackNavigationProp<RootStackParamList, any>
@@ -34,20 +31,9 @@ export interface SettingSection {
   items: SettingItem[]
 }
 
-// 진동 옵션
-export type VibrationType =
-  | '기본'
-  | '가벼움'
-  | '중간'
-  | '강함'
-  | '단단함'
-  | '부드러움'
-  | '성공'
-  | '경고'
-  | '오류'
-
 // 벨소리 옵션
 export type SoundType =
+  | '없음'
   | '기본'
   | '벨소리1'
   | '벨소리2'
@@ -55,3 +41,8 @@ export type SoundType =
   | '벨소리4'
   | '벨소리5'
   | '벨소리6'
+
+export interface Sound {
+  label: SoundType
+  sound: any
+}

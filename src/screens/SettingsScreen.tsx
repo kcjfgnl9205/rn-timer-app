@@ -1,45 +1,40 @@
-import { View } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
-import { Bell, Vibrate, BellRing, ChevronRight, Info } from 'lucide-react-native'
+import { View, FlatList, Switch } from 'react-native'
+import { Bell, BellRing, MoonStar } from 'lucide-react-native'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import SettingContainer from '@/components/settings/SettingContainer'
 import SettingIcon from '@/components/settings/SettingIcon'
-import { Text } from '@/components/common/Text'
-import { Navigation, SettingSection } from '@/types/type'
+import { SettingSection } from '@/types/type'
+import { getColors } from '@/theme/colors'
 
 export default function SettingsScreen() {
-  const navigation = useNavigation<Navigation>()
-  const vibration = useSettingsStore((s) => s.vibration)
   const sound = useSettingsStore((s) => s.sound)
+  const setSound = useSettingsStore((s) => s.setSoundEnabled)
+
   const push = useSettingsStore((s) => s.push)
+  const setPush = useSettingsStore((s) => s.setPushEnabled)
+
+  const colorScheme = useSettingsStore((s) => s.colorScheme)
+  const setColorScheme = useSettingsStore((s) => s.setColorScheme)
+  const colors = getColors(colorScheme)
 
   const sections: SettingSection[] = [
     {
       title: '알림 설정',
       items: [
         {
-          icon: <SettingIcon icon={Vibrate} />,
-          label: '진동 알림',
-          subLabel: '타이머 종료 시 진동으로 알림',
-          rightIcon: (
-            <View className="flex-row gap-4 items-center">
-              <Text>{vibration.enabled ? `ON (${vibration.value})` : 'OFF'} </Text>
-              <ChevronRight size={24} color="#000" />
-            </View>
-          ),
-          onPress: () => navigation.navigate('VibrationSetting'),
-        },
-        {
           icon: <SettingIcon icon={Bell} />,
           label: '소리 알림',
           subLabel: '타이머 종료 시 소리로 알림',
           rightIcon: (
             <View className="flex-row gap-4 items-center">
-              <Text>{sound.enabled ? `ON (${sound.value})` : 'OFF'} </Text>
-              <ChevronRight size={24} color="#000" />
+              <Switch
+                value={sound.enabled}
+                onValueChange={setSound}
+                trackColor={{ true: '#06b6d4', false: '#ccc' }}
+                thumbColor="#fff"
+              />
             </View>
           ),
-          onPress: () => navigation.navigate('SoundSetting'),
         },
         {
           icon: <SettingIcon icon={BellRing} />,
@@ -47,15 +42,45 @@ export default function SettingsScreen() {
           subLabel: '앱이 닫혀 있을 때도 알림 받기',
           rightIcon: (
             <View className="flex-row gap-4 items-center">
-              <Text>{push.enabled ? `ON (${push.value})` : 'OFF'} </Text>
-              <ChevronRight size={24} color="#000" />
+              <Switch
+                value={push.enabled}
+                onValueChange={setPush}
+                trackColor={{ true: '#06b6d4', false: '#ccc' }}
+                thumbColor="#fff"
+              />
             </View>
           ),
-          onPress: () => navigation.navigate('PushSetting'),
+        },
+      ],
+    },
+    {
+      title: '테마',
+      items: [
+        {
+          icon: <SettingIcon icon={MoonStar} />,
+          label: '다크 모드',
+          subLabel: '',
+          rightIcon: (
+            <View className="flex-row gap-4 items-center">
+              <Switch
+                value={colorScheme === 'dark'}
+                onValueChange={(val) => setColorScheme(val ? 'dark' : 'light')}
+                trackColor={{ true: '#06b6d4', false: '#ccc' }}
+                thumbColor="#fff"
+              />
+            </View>
+          ),
         },
       ],
     },
   ]
 
-  return <SettingContainer items={sections} />
+  return (
+    <FlatList
+      data={sections}
+      renderItem={({ item }) => <SettingContainer item={item} />}
+      className="h-full pt-8"
+      style={{ backgroundColor: colors.background }}
+    />
+  )
 }

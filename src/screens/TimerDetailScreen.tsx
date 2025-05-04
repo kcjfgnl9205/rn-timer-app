@@ -1,7 +1,7 @@
 import { useEffect, useState, useLayoutEffect } from 'react'
 import { View, TouchableOpacity, Dimensions, useWindowDimensions } from 'react-native'
 import { useRoute, useNavigation } from '@react-navigation/native'
-import { Pause, Play, RotateCw, Trash2, Bell, Vibrate } from 'lucide-react-native'
+import { Pause, Play, RotateCw, Bell, Vibrate } from 'lucide-react-native'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { Text } from '@/components/common/Text'
 import TimerCircle from '@/components/timer/TimerCircle'
@@ -9,6 +9,7 @@ import TimerCircle from '@/components/timer/TimerCircle'
 export default function TimerDetailScreen() {
   const route = useRoute()
   const navigation = useNavigation()
+
   // 타이머 아이디
   const { id } = route.params as { id: string }
 
@@ -29,7 +30,6 @@ export default function TimerDetailScreen() {
   const startTimer = useTimerStore((s) => s.startTimer)
   const pauseTimer = useTimerStore((s) => s.pauseTimer)
   const resetTimer = useTimerStore((s) => s.resetTimer)
-  const deleteTimer = useTimerStore((s) => s.deleteTimer)
 
   const timer = timers.find((t) => t.id === id)
   if (!timer) return <Text>타이머를 찾을 수 없습니다.</Text>
@@ -52,11 +52,6 @@ export default function TimerDetailScreen() {
 
     return () => clearInterval(interval)
   }, [timer.isRunning])
-
-  const handleDelete = () => {
-    deleteTimer(timer.id)
-    navigation.goBack()
-  }
 
   return isLandscape ? (
     // 가로모드 레이아웃

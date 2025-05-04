@@ -1,5 +1,5 @@
 import { Audio } from 'expo-av'
-import { SOUND_MAP } from '@/consts/const'
+import { SOUND_LIST } from '@/consts/const'
 import { SoundType, Timer } from '@/types/type'
 
 /**
@@ -97,7 +97,9 @@ export function getRemainingTime(timer: Timer): number {
  * @returns
  */
 export async function playSound(label: SoundType) {
-  const { sound } = await Audio.Sound.createAsync(SOUND_MAP[label])
+  const item = SOUND_LIST.find((item) => item.label === label)
+  if (!item) return
+  const { sound } = await Audio.Sound.createAsync(item.sound)
   await sound.playAsync()
   sound.setOnPlaybackStatusUpdate((status) => {
     if (status.isLoaded && status.didJustFinish) {
