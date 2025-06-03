@@ -32,6 +32,9 @@ export default function BottomTabNavigator() {
         tabBarActiveTintColor: colors.text,
         tabBarInactiveTintColor: '#aaa',
         tabBarLabelStyle: { fontSize: 12 },
+        sceneStyle: {
+          backgroundColor: colors.background,
+        },
       }}
     >
       <Tab.Screen

@@ -39,10 +39,7 @@ export default function TimerCard({ item }: Props) {
               {item.title}
             </Text>
 
-            <Text
-              className="font-black text-3xl"
-              style={{ fontVariant: ['tabular-nums'], color: colors.text }}
-            >
+            <Text className="font-black text-3xl" style={{ fontVariant: ['tabular-nums'] }}>
               {formatTime(remainingTime)}
             </Text>
           </View>

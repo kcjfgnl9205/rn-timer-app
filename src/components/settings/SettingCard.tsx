@@ -12,10 +12,11 @@ interface Props {
 }
 
 export default function SettingCard({ icon, label, subLabel, onPress, rightIcon }: Props) {
-  const isPressable = typeof onPress === 'function'
-  const Container = isPressable ? TouchableOpacity : View
   const colorScheme = useSettingsStore((s) => s.colorScheme)
   const colors = getColors(colorScheme)
+
+  const isPressable = typeof onPress === 'function'
+  const Container = isPressable ? TouchableOpacity : View
 
   return (
     <Container
@@ -26,9 +27,7 @@ export default function SettingCard({ icon, label, subLabel, onPress, rightIcon 
       <View className="flex-row items-center gap-2">
         {icon}
         <View>
-          <Text className="text-lg" style={{ color: colors.text }}>
-            {label}
-          </Text>
+          <Text className="text-lg">{label}</Text>
           {subLabel && (
             <Text className="text-base" style={{ color: colors.subText }}>
               {subLabel}

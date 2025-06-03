@@ -26,9 +26,7 @@ export default function TimeQuickAddButtons({ onAdd }: Props) {
           className="rounded-full px-4 py-2 mx-1 my-1"
           style={{ backgroundColor: colors.container, borderColor: colors.border }}
         >
-          <Text className="text-sm" style={{ color: colors.text }}>
-            {option.label}
-          </Text>
+          <Text className="text-sm">{option.label}</Text>
         </TouchableOpacity>
       ))}
     </View>

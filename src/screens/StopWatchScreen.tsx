@@ -65,12 +65,9 @@ export default function StopWatchScreen() {
   }
 
   return (
-    <View className="flex-1 px-6 pt-12 gap-14" style={{ backgroundColor: colors.background }}>
+    <View className="flex-1 px-6 pt-12 gap-14">
       <View className="flex-col items-center gap-8">
-        <Text
-          className="text-6xl font-bold"
-          style={{ fontVariant: ['tabular-nums'], color: colors.text }}
-        >
+        <Text className="text-6xl font-bold" style={{ fontVariant: ['tabular-nums'] }}>
           {formatTimeStopWatch(elapsed)}
         </Text>
 
@@ -123,13 +120,8 @@ export default function StopWatchScreen() {
         contentContainerStyle={{ paddingBottom: 12 }}
         renderItem={({ item, index }) => (
           <View className="flex-row justify-between border-b border-neutral-300 py-4">
-            <Text className="text-lg font-bold" style={{ color: colors.text }}>
-              Lap {laps.length - index}
-            </Text>
-            <Text
-              className="text-xl font-bold"
-              style={{ fontVariant: ['tabular-nums'], color: colors.text }}
-            >
+            <Text className="text-lg font-bold">Lap {laps.length - index}</Text>
+            <Text className="text-xl font-bold" style={{ fontVariant: ['tabular-nums'] }}>
               {formatTimeStopWatch(item)}
             </Text>
           </View>

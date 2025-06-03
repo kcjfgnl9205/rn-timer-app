@@ -1,4 +1,5 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
+import { Text } from '@/components/common/Text'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import { getColors } from '@/theme/colors'
 import { SettingSection } from '@/types/type'
@@ -12,11 +13,7 @@ export default function SettingContainer({ item }: Props) {
   const colors = getColors(colorScheme)
   return (
     <View className="mx-1 mb-8">
-      {item.title && (
-        <Text className="font-bold text-lg mb-2 px-2" style={{ color: colors.text }}>
-          {item.title}
-        </Text>
-      )}
+      {item.title && <Text className="font-bold text-lg mb-2 px-2">{item.title}</Text>}
       <View
         className="flex-col rounded-xl w-full py-1"
         style={{ backgroundColor: colors.container, borderColor: colors.border, borderWidth: 1 }}

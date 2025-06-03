@@ -1,14 +1,14 @@
 import { useLayoutEffect, useState, useEffect } from 'react'
-import { View, TextInput, Alert, TouchableOpacity, Pressable, FlatList } from 'react-native'
+import { View, TextInput, Alert, TouchableOpacity, Pressable } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import Modal from 'react-native-modal'
 import uuid from 'react-native-uuid'
-import { Bell, Check } from 'lucide-react-native'
+import { Bell } from 'lucide-react-native'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import TimePickerGroup from '@/components/timer/TimePickerGroup'
 import TimeQuickAddButtons from '@/components/timer/TimeQuickAddButtons'
 import { Text } from '@/components/common/Text'
+import { SelectModal } from '@/components/modal/SelectModal'
 import { addSecondsToTime, playSound, splitTime } from '@/utils/utils'
 import { getColors } from '@/theme/colors'
 import { Timer, SoundType } from '@/types/type'
@@ -91,15 +91,11 @@ export default function TimerFormScreen() {
         <View className="flex flex-row gap-3 mr-4">
           {isEditMode && (
             <TouchableOpacity onPress={() => handleDelete(id)}>
-              <Text className="font-medium text-lg" style={{ color: colors.text }}>
-                삭제
-              </Text>
+              <Text className="font-medium text-lg">삭제</Text>
             </TouchableOpacity>
           )}
           <TouchableOpacity onPress={() => handleCreate(isEditMode)}>
-            <Text className="font-medium text-lg" style={{ color: colors.text }}>
-              {header}
-            </Text>
+            <Text className="font-medium text-lg">{header}</Text>
           </TouchableOpacity>
         </View>
       ),
@@ -112,10 +108,8 @@ export default function TimerFormScreen() {
   }
 
   return (
-    <View className="flex-1 p-6" style={{ backgroundColor: colors.background }}>
-      <Text className="text-base mb-2" style={{ color: colors.text }}>
-        타이머 제목
-      </Text>
+    <View className="flex-1 p-6">
+      <Text className="text-base mb-2">타이머 제목</Text>
       <TextInput
         className="border rounded-lg px-4 py-4 mb-8"
         style={{
@@ -127,7 +121,6 @@ export default function TimerFormScreen() {
         value={title}
         onChangeText={setTitle}
       />
-
       <TimePickerGroup
         hours={hours}
         minutes={minutes}
@@ -136,66 +129,29 @@ export default function TimerFormScreen() {
         setMinutes={setMinutes}
         setSeconds={setSeconds}
       />
-
       <TimeQuickAddButtons onAdd={handleAddTime} />
-
-      <Text className="text-base mb-2" style={{ color: colors.text }}>
-        알람 설정
-      </Text>
+      <Text className="text-base mb-2">알람 설정</Text>
       <Pressable onPress={() => setVisible(true)}>
         <View
           className="flex flex-row gap-2 items-center p-4 rounded-lg border"
           style={{ backgroundColor: colors.container, borderColor: colors.border }}
         >
           <Bell size={22} color={colors.text} />
-          <Text className="text-base " style={{ color: colors.text }}>
-            {sound}
-          </Text>
+          <Text className="text-base ">{sound}</Text>
         </View>
       </Pressable>
 
-      <Modal
-        isVisible={visible}
-        onBackdropPress={() => setVisible(false)}
-        style={{ justifyContent: 'flex-end', margin: 0 }} // 🔽 아래에서 위로
-      >
-        <View
-          style={{
-            backgroundColor: colors.container,
-            borderTopLeftRadius: 16,
-            borderTopRightRadius: 16,
-            height: '50%',
-          }}
-          className="py-6 px-2 "
-        >
-          <View className="flex flex-row items-center justify-center mb-8">
-            <Text style={{ color: colors.text }} className="font-semibold text-xl">
-              소리 설정
-            </Text>
-          </View>
-          <View className="pb-20">
-            <FlatList
-              data={SOUND_LIST}
-              renderItem={({ item }) => {
-                const isSelected = item.label === sound
-                return (
-                  <Pressable onPress={() => handleSoundPlay(item.label)}>
-                    <View
-                      className="flex flex-row justify-between items-center border rounded-lg p-4 mb-2"
-                      style={{ borderColor: colors.border }}
-                    >
-                      <Text style={{ color: colors.text }} className="text-lg font-semibold">
-                        {item.label}
-                      </Text>
-                      {isSelected && <Check size={22} color={colors.text} />}
-                    </View>
-                  </Pressable>
-                )
-              }}
-            />
-          </View>
-        </View>
-      </Modal>
+      <SelectModal
+        visible={visible}
+        title="소리 설정"
+        items={SOUND_LIST.map((s) => ({ label: s.label, value: s.label }))}
+        selectedValue={sound}
+        onSelect={async (label) => {
+          setSound(label)
+          await playSound(label)
+        }}
+        onClose={() => setVisible(false)}
+      />
     </View>
   )
 }

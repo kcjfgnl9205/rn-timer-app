@@ -26,9 +26,7 @@ export default function TimePickerGroup({
   const colors = getColors(colorScheme)
   return (
     <View>
-      <Text className="text-base mb-2" style={{ color: colors.text }}>
-        시간 설정
-      </Text>
+      <Text className="text-base mb-2">시간 설정</Text>
       <View className="flex-row justify-center mb-6">
         {[
           { value: hours, setter: setHours, range: 24 },

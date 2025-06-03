@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import BottomTabNavigator from '@/navigation/BottomTabNavigator'
 import TimerFormScreen from '@/screens/TimerFormScreen'
 import TimerDetailScreen from '@/screens/TimerDetailScreen'
+import CategorySettingScreen from '@/screens/CategorySettingScreen'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import { getColors } from '@/theme/colors'
 import { RootStackParamList } from '@/types/type'
@@ -13,35 +14,39 @@ export default function RootStackNavigator() {
   const colorScheme = useSettingsStore((s) => s.colorScheme)
   const colors = getColors(colorScheme)
 
+  const defaultScreenOptions = {
+    headerStyle: {
+      backgroundColor: colors.background,
+    },
+    headerTitleStyle: {
+      color: colors.text,
+    },
+    headerTintColor: colors.text,
+    headerBackTitle: '뒤로',
+    headerBackTitleStyle: {
+      ...({
+        fontSize: 18,
+        fontWeight: '500',
+        color: colors.text,
+      } as TextStyle),
+    },
+    contentStyle: {
+      backgroundColor: colors.background,
+    },
+  }
+
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={defaultScreenOptions}>
       <Stack.Screen name="Tabs" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen
         name="TimerForm"
         component={TimerFormScreen}
-        options={{
-          title: '타이머 추가',
-          headerBackTitle: '뒤로',
-          headerBackTitleStyle: {
-            ...({
-              fontSize: 18,
-              fontWeight: 500,
-              color: colors.text,
-            } as TextStyle),
-          },
-          headerStyle: {
-            backgroundColor: colors.background,
-          },
-          headerTitleStyle: {
-            color: colors.text,
-          },
-          headerTintColor: colors.text,
-        }}
+        options={{ title: '타이머 추가' }}
       />
       <Stack.Screen
-        name="TimerDetail"
-        component={TimerDetailScreen}
-        options={{ title: '', headerBackTitle: '뒤로' }}
+        name="CategorySetting"
+        component={CategorySettingScreen}
+        options={{ title: '카테고리 설정' }}
       />
     </Stack.Navigator>
   )

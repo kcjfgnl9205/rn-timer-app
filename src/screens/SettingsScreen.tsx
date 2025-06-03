@@ -1,12 +1,15 @@
 import { View, FlatList, Switch } from 'react-native'
-import { Bell, BellRing, MoonStar } from 'lucide-react-native'
+import { useNavigation } from '@react-navigation/native'
+import { Bell, BellRing, MoonStar, SquareDashed, ChevronRight } from 'lucide-react-native'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import SettingContainer from '@/components/settings/SettingContainer'
 import SettingIcon from '@/components/settings/SettingIcon'
-import { SettingSection } from '@/types/type'
+import { Navigation, SettingSection } from '@/types/type'
 import { getColors } from '@/theme/colors'
 
 export default function SettingsScreen() {
+  const navigation = useNavigation<Navigation>()
+
   const sound = useSettingsStore((s) => s.sound)
   const setSound = useSettingsStore((s) => s.setSoundEnabled)
 
@@ -19,7 +22,7 @@ export default function SettingsScreen() {
 
   const sections: SettingSection[] = [
     {
-      title: '알림 설정',
+      title: '알림',
       items: [
         {
           icon: <SettingIcon icon={Bell} />,
@@ -54,6 +57,22 @@ export default function SettingsScreen() {
       ],
     },
     {
+      title: '카테고리',
+      items: [
+        {
+          icon: <SettingIcon icon={SquareDashed} />,
+          label: '카테고리 설정',
+          subLabel: '',
+          onPress: () => navigation.navigate('CategorySetting'),
+          rightIcon: (
+            <View className="flex-row gap-4 items-center">
+              <ChevronRight size={20} color={colors.text} />
+            </View>
+          ),
+        },
+      ],
+    },
+    {
       title: '테마',
       items: [
         {
@@ -80,7 +99,6 @@ export default function SettingsScreen() {
       data={sections}
       renderItem={({ item }) => <SettingContainer item={item} />}
       className="h-full pt-8"
-      style={{ backgroundColor: colors.background }}
     />
   )
 }

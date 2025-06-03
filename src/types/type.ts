@@ -4,6 +4,7 @@ export type RootStackParamList = {
   Tabs: undefined
   TimerForm: undefined | { id?: string }
   TimerDetail: { id: string }
+  CategorySetting: undefined
 }
 
 export type Navigation = NativeStackNavigationProp<RootStackParamList, any>
