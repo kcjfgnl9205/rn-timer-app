@@ -1,6 +1,6 @@
-import { useLayoutEffect, useState } from 'react'
+import { useLayoutEffect, useState, useEffect } from 'react'
 import { View, TextInput, Alert, TouchableOpacity, Pressable, FlatList } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import Modal from 'react-native-modal'
 import uuid from 'react-native-uuid'
 import { Bell, Check } from 'lucide-react-native'
@@ -9,39 +9,65 @@ import { useSettingsStore } from '@/stores/useSettingsStore'
 import TimePickerGroup from '@/components/timer/TimePickerGroup'
 import TimeQuickAddButtons from '@/components/timer/TimeQuickAddButtons'
 import { Text } from '@/components/common/Text'
-import { addSecondsToTime, playSound } from '@/utils/utils'
+import { addSecondsToTime, playSound, splitTime } from '@/utils/utils'
 import { getColors } from '@/theme/colors'
 import { Timer, SoundType } from '@/types/type'
 import { SOUND_LIST } from '@/consts/const'
 
-export default function TimerCreateScreen() {
+export default function TimerFormScreen() {
   const navigation = useNavigation()
+  const route = useRoute<any>()
+  const { id } = route.params || {}
+  const isEditMode = !!id
+
   const [title, setTitle] = useState('')
   const [hours, setHours] = useState('0')
   const [minutes, setMinutes] = useState('30')
   const [seconds, setSeconds] = useState('0')
   const [sound, setSound] = useState<SoundType>('없음')
-  const addTimer = useTimerStore((s) => s.addTimer)
   const [visible, setVisible] = useState(false)
+
   const colorScheme = useSettingsStore((s) => s.colorScheme)
   const colors = getColors(colorScheme)
+  const { addTimer, updateTimer, timers } = useTimerStore()
 
-  const handleCreate = () => {
+  // 기존 타이머 데이터 로딩
+  useEffect(() => {
+    if (isEditMode) {
+      const existing = timers.find((t) => t.id === id)
+      if (existing) {
+        setTitle(existing.title)
+        const time = splitTime(existing.duration)
+        setHours(String(time.hours))
+        setMinutes(String(time.minutes))
+        setSeconds(String(time.seconds))
+        setSound(existing.sound)
+      }
+    }
+  }, [isEditMode, id])
+
+  const handleCreate = (flg: boolean) => {
     if (!title.trim()) {
       Alert.alert('타이머 이름을 입력해주세요.')
       return
     }
 
+    const timerId = flg ? id : (uuid.v4() as string)
     const duration = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds)
     const newTimer: Timer = {
-      id: uuid.v4() as string,
+      id: timerId,
       title,
       duration,
       remainingTime: duration,
       totalTime: 0,
+      sound,
     }
 
-    addTimer(newTimer)
+    if (flg) {
+      updateTimer(newTimer)
+    } else {
+      addTimer(newTimer)
+    }
     navigation.goBack()
   }
 
@@ -53,14 +79,16 @@ export default function TimerCreateScreen() {
   }
 
   useLayoutEffect(() => {
+    const header = isEditMode ? '수정' : '추가'
     navigation.setOptions({
+      headerTitle: `타이머 ${header}`, // 제목 숨기기
       headerRight: () => (
-        <TouchableOpacity onPress={handleCreate} className="mr-4">
-          <Text style={{ color: colors.text, fontSize: 18, fontWeight: 500 }}>추가</Text>
+        <TouchableOpacity onPress={() => handleCreate(isEditMode)} className="mr-4">
+          <Text style={{ color: colors.text, fontSize: 18, fontWeight: 500 }}>{header}</Text>
         </TouchableOpacity>
       ),
     })
-  }, [navigation, title, hours, minutes, seconds])
+  }, [navigation, title, hours, minutes, seconds, sound])
 
   const handleSoundPlay = async (label: SoundType) => {
     setSound(label)

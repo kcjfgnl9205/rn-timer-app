@@ -22,7 +22,7 @@ export default function TimerCard({ item }: Props) {
   const colors = getColors(colorScheme)
 
   return (
-    <Pressable onPress={() => navigation.navigate('TimerDetail', { id: item.id })}>
+    <Pressable onPress={() => navigation.navigate('TimerForm', { id: item.id })}>
       <View
         className="flex-row justify-between items-center relative border-[1px] rounded-xl mb-2"
         style={{ backgroundColor: colors.container, borderColor: colors.border }}

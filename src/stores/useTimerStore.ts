@@ -6,6 +6,7 @@ import { Timer } from '@/types/type'
 type TimerStore = {
   timers: Timer[]
   addTimer: (timer: Timer) => void
+  updateTimer: (timer: Timer) => void
   startTimer: (id: string) => void
   pauseTimer: (id: string) => void
   resetTimer: (id: string) => void
@@ -19,6 +20,20 @@ export const useTimerStore = create<TimerStore>()(
       addTimer: (timer) =>
         set((state) => ({
           timers: [{ ...timer, isRunning: false, remainingTime: timer.duration }, ...state.timers],
+        })),
+      updateTimer: (updated) =>
+        set((state) => ({
+          timers: state.timers.map((t) =>
+            t.id === updated.id
+              ? {
+                  ...t,
+                  ...updated,
+                  isRunning: false,
+                  startedAt: null,
+                  remainingTime: updated.duration,
+                }
+              : t
+          ),
         })),
       startTimer: (id) =>
         set((state) => ({

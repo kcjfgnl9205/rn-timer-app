@@ -10,7 +10,7 @@ export default function TimerAdd() {
   const colorScheme = useSettingsStore((s) => s.colorScheme)
   const colors = getColors(colorScheme)
   return (
-    <Pressable onPress={() => navigation.navigate('TimerCreate')}>
+    <Pressable onPress={() => navigation.navigate('TimerForm')}>
       <View className="mr-4">
         <Plus size={24} color={colors.text} />
       </View>

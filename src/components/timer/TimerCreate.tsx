@@ -7,7 +7,7 @@ export default function TimerCreate() {
   const navigation = useNavigation<Navigation>()
 
   return (
-    <Pressable onPress={() => navigation.navigate('TimerCreate')}>
+    <Pressable onPress={() => navigation.navigate('TimerForm')}>
       <View className="mr-4">
         <Plus size={24} color="#000" />
       </View>

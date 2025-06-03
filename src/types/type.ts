@@ -2,7 +2,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 export type RootStackParamList = {
   Tabs: undefined
-  TimerCreate: undefined
+  TimerForm: undefined | { id?: string }
   TimerDetail: { id: string }
 }
 
@@ -16,6 +16,7 @@ export interface Timer {
   isRunning?: boolean // 실행중인지
   remainingTime: number // 일시정지 시 남은 시간 기억용
   totalTime: number // 타이머 총 실행 시간
+  sound: SoundType
 }
 
 export interface SettingItem {

@@ -39,7 +39,6 @@ export function useTimerProgress(timer: Timer, radius: number = 80) {
             intervalRef.current = null
           }
 
-          console.log(`⏰ 타이머 끝남: ${timer.title}`)
           pauseTimer(timer.id)
 
           Alert.alert(

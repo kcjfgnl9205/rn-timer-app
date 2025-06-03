@@ -125,3 +125,20 @@ export function getCirclePath(r: number, strokeWidth: number) {
     A ${r},${r} 0 1,0 ${cx + r},${cy}
   `
 }
+
+/**
+ * 초를 시, 분, 초 로 변환
+ * @param totalSeconds 총시간
+ * @returns
+ */
+export function splitTime(totalSeconds: number) {
+  const hours = Math.floor(totalSeconds / 3600)
+  const minutes = Math.floor((totalSeconds % 3600) / 60)
+  const seconds = totalSeconds % 60
+
+  return {
+    hours,
+    minutes,
+    seconds,
+  }
+}

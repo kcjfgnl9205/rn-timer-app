@@ -1,7 +1,7 @@
 import { TextStyle } from 'react-native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import BottomTabNavigator from '@/navigation/BottomTabNavigator'
-import TimerCreateScreen from '@/screens/TimerCreateScreen'
+import TimerFormScreen from '@/screens/TimerFormScreen'
 import TimerDetailScreen from '@/screens/TimerDetailScreen'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import { getColors } from '@/theme/colors'
@@ -17,8 +17,8 @@ export default function RootStackNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Tabs" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen
-        name="TimerCreate"
-        component={TimerCreateScreen}
+        name="TimerForm"
+        component={TimerFormScreen}
         options={{
           title: '타이머 추가',
           headerBackTitle: '뒤로',
