@@ -29,7 +29,7 @@ export default function TimerFormScreen() {
 
   const colorScheme = useSettingsStore((s) => s.colorScheme)
   const colors = getColors(colorScheme)
-  const { addTimer, updateTimer, timers } = useTimerStore()
+  const { addTimer, updateTimer, deleteTimer, timers } = useTimerStore()
 
   // 기존 타이머 데이터 로딩
   useEffect(() => {
@@ -71,6 +71,11 @@ export default function TimerFormScreen() {
     navigation.goBack()
   }
 
+  const handleDelete = (id: string) => {
+    deleteTimer(id)
+    navigation.goBack()
+  }
+
   const handleAddTime = (sec: number) => {
     const result = addSecondsToTime(hours, minutes, seconds, sec)
     setHours(result.hours)
@@ -81,11 +86,22 @@ export default function TimerFormScreen() {
   useLayoutEffect(() => {
     const header = isEditMode ? '수정' : '추가'
     navigation.setOptions({
-      headerTitle: `타이머 ${header}`, // 제목 숨기기
+      headerTitle: `타이머 ${header}`,
       headerRight: () => (
-        <TouchableOpacity onPress={() => handleCreate(isEditMode)} className="mr-4">
-          <Text style={{ color: colors.text, fontSize: 18, fontWeight: 500 }}>{header}</Text>
-        </TouchableOpacity>
+        <View className="flex flex-row gap-3 mr-4">
+          {isEditMode && (
+            <TouchableOpacity onPress={() => handleDelete(id)}>
+              <Text className="font-medium text-lg" style={{ color: colors.text }}>
+                삭제
+              </Text>
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity onPress={() => handleCreate(isEditMode)}>
+            <Text className="font-medium text-lg" style={{ color: colors.text }}>
+              {header}
+            </Text>
+          </TouchableOpacity>
+        </View>
       ),
     })
   }, [navigation, title, hours, minutes, seconds, sound])
