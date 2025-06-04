@@ -1,11 +1,15 @@
 import { View, FlatList, Switch } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { Bell, BellRing, MoonStar, SquareDashed, ChevronRight } from 'lucide-react-native'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import SettingContainer from '@/components/settings/SettingContainer'
 import SettingIcon from '@/components/settings/SettingIcon'
 import { Navigation, SettingSection } from '@/types/type'
 import { getColors } from '@/theme/colors'
+import Bell from '@/assets/icons/bell.svg'
+import BellRing from '@/assets/icons/bell-ring.svg'
+import MoonStar from '@/assets/icons/moon-star.svg'
+import SquareDashed from '@/assets/icons/square-dashed.svg'
+import ChevronRight from '@/assets/icons/chevron-right.svg'
 
 export default function SettingsScreen() {
   const navigation = useNavigation<Navigation>()
@@ -66,7 +70,7 @@ export default function SettingsScreen() {
           onPress: () => navigation.navigate('CategorySetting'),
           rightIcon: (
             <View className="flex-row gap-4 items-center">
-              <ChevronRight size={20} color={colors.text} />
+              <ChevronRight width={20} height={20} color={colors.text} />
             </View>
           ),
         },

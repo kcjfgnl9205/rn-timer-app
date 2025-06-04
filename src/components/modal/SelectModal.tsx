@@ -2,7 +2,7 @@
 
 import { FlatList, View, Pressable } from 'react-native'
 import Modal from 'react-native-modal'
-import { Check } from 'lucide-react-native'
+import Check from '@/assets/icons/check.svg'
 import { getColors } from '@/theme/colors'
 import { Text } from '@/components/common/Text'
 import { useSettingsStore } from '@/stores/useSettingsStore'
@@ -63,7 +63,7 @@ export function SelectModal<T>({
                   style={{ borderColor: colors.border }}
                 >
                   <Text className="text-lg font-semibold">{item.label}</Text>
-                  {isSelected && <Check size={22} color={colors.text} />}
+                  {isSelected && <Check width={22} height={22} color={colors.text} />}
                 </View>
               </Pressable>
             )

@@ -1,6 +1,5 @@
 import { View, TouchableOpacity, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { Play, Pause, RotateCw } from 'lucide-react-native'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import { Text } from '@/components/common/Text'
@@ -8,6 +7,9 @@ import { formatTime } from '@/utils/utils'
 import { Timer, Navigation } from '@/types/type'
 import { useTimerProgress } from '@/hooks/useTimerProgress'
 import { getColors } from '@/theme/colors'
+import Pause from '@/assets/icons/pause.svg'
+import Play from '@/assets/icons/play.svg'
+import RotateCw from '@/assets/icons/rotate-cw.svg'
 
 interface Props {
   item: Timer
@@ -50,7 +52,7 @@ export default function TimerCard({ item }: Props) {
                 className="border-[1px] border-neutral-200 p-4 rounded-full"
                 onPress={() => resetTimer(item.id)}
               >
-                <RotateCw size={20} color={colors.text} />
+                <RotateCw width={20} height={20} color={colors.text} />
               </TouchableOpacity>
             )}
             <TouchableOpacity
@@ -58,9 +60,9 @@ export default function TimerCard({ item }: Props) {
               onPress={() => (item.isRunning ? pauseTimer(item.id) : startTimer(item.id))}
             >
               {item.isRunning ? (
-                <Pause size={20} color={colors.text} />
+                <Pause width={20} height={20} color={colors.text} />
               ) : (
-                <Play size={20} color={colors.text} />
+                <Play width={20} height={20} color={colors.text} />
               )}
             </TouchableOpacity>
           </View>

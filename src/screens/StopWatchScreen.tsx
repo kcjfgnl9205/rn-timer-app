@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { View, TouchableOpacity, AppState, AppStateStatus, FlatList } from 'react-native'
-import { RotateCw, Pause, Play, Flag } from 'lucide-react-native'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import { Text } from '@/components/common/Text'
 import { getColors } from '@/theme/colors'
 import { formatTimeStopWatch } from '@/utils/utils'
+import Pause from '@/assets/icons/pause.svg'
+import Play from '@/assets/icons/play.svg'
+import RotateCw from '@/assets/icons/rotate-cw.svg'
+import Flag from '@/assets/icons/flag.svg'
 
 export default function StopWatchScreen() {
   const [isRunning, setIsRunning] = useState(false)
@@ -82,9 +85,9 @@ export default function StopWatchScreen() {
             onPress={() => setIsRunning((prev) => !prev)}
           >
             {isRunning ? (
-              <Pause size={32} color={colors.text} />
+              <Pause width={32} height={32} color={colors.text} />
             ) : (
-              <Play size={32} color={colors.text} />
+              <Play width={32} height={32} color={colors.text} />
             )}
           </TouchableOpacity>
           <TouchableOpacity
@@ -97,7 +100,7 @@ export default function StopWatchScreen() {
             }}
             onPress={handleReset}
           >
-            <RotateCw size={32} color={colors.text} />
+            <RotateCw width={32} height={32} color={colors.text} />
           </TouchableOpacity>
           <TouchableOpacity
             className="p-4 rounded-full"
@@ -108,7 +111,7 @@ export default function StopWatchScreen() {
               borderWidth: 1,
             }}
           >
-            <Flag size={32} color={colors.text} />
+            <Flag width={32} height={32} color={colors.text} />
           </TouchableOpacity>
         </View>
       </View>

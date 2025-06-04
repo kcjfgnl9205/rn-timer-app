@@ -1,4 +1,5 @@
-import { Audio } from 'expo-av'
+import { useAudioPlayer, createAudioPlayer } from 'expo-audio'
+
 import { SOUND_LIST } from '@/consts/const'
 import { SoundType, Timer } from '@/types/type'
 
@@ -96,16 +97,26 @@ export function getRemainingTime(timer: Timer): number {
  * @param label - 벨소리 이름
  * @returns
  */
-export async function playSound(label: SoundType) {
-  const item = SOUND_LIST.find((item) => item.label === label)
-  if (!item) return
-  const { sound } = await Audio.Sound.createAsync(item.sound)
-  await sound.playAsync()
-  sound.setOnPlaybackStatusUpdate((status) => {
-    if (status.isLoaded && status.didJustFinish) {
-      sound.unloadAsync()
+let currentPlayer: ReturnType<typeof createAudioPlayer> | null = null
+export const useSoundPlayer = () => {
+  const playSound = async (label: SoundType) => {
+    const item = SOUND_LIST.find((item) => item.label === label)
+    if (!item || !item.sound) return
+
+    // 이전 플레이어 정리
+    if (currentPlayer) {
+      currentPlayer.remove()
+      currentPlayer = null
     }
-  })
+
+    // 새로운 사운드 재생
+    const player = createAudioPlayer(item.sound)
+    currentPlayer = player
+
+    await player.play()
+  }
+
+  return { playSound }
 }
 
 /**

@@ -1,3 +1,4 @@
+import { JSX } from 'react'
 import { View, TouchableOpacity } from 'react-native'
 import { Text } from '@/components/common/Text'
 import { useSettingsStore } from '@/stores/useSettingsStore'

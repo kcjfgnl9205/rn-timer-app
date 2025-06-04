@@ -1,6 +1,6 @@
 import { Platform, View } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
-import { ChevronDown } from 'lucide-react-native'
+import ChevronDown from '@/assets/icons/chevron-down.svg'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import { Text } from '@/components/common/Text'
 import { getColors } from '@/theme/colors'
@@ -57,7 +57,7 @@ export default function TimePickerGroup({
 
             {Platform.OS === 'android' && colorScheme === 'dark' && (
               <View className="absolute right-2 top-[45%] pointer-events-none">
-                <ChevronDown size={16} color={colors.text} />
+                <ChevronDown width={16} height={16} color={colors.text} />
               </View>
             )}
           </View>

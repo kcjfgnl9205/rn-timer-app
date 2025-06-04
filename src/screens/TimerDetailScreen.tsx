@@ -1,10 +1,14 @@
 import { useEffect, useState, useLayoutEffect } from 'react'
 import { View, TouchableOpacity, Dimensions, useWindowDimensions } from 'react-native'
 import { useRoute, useNavigation } from '@react-navigation/native'
-import { Pause, Play, RotateCw, Bell, Vibrate } from 'lucide-react-native'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { Text } from '@/components/common/Text'
 import TimerCircle from '@/components/timer/TimerCircle'
+import Bell from '@/assets/icons/bell.svg'
+import Pause from '@/assets/icons/pause.svg'
+import Play from '@/assets/icons/play.svg'
+import RotateCw from '@/assets/icons/rotate-cw.svg'
+import Vibrate from '@/assets/icons/vibrate.svg'
 
 export default function TimerDetailScreen() {
   const route = useRoute()
@@ -63,10 +67,10 @@ export default function TimerDetailScreen() {
       <View className="flex-1 justify-center items-center flex-col gap-4">
         <View className="flex-row gap-4">
           <TouchableOpacity>
-            <Bell size={22} color="#000" />
+            <Bell width={22} height={22} color="#000" />
           </TouchableOpacity>
           <TouchableOpacity>
-            <Vibrate size={22} color="#000" />
+            <Vibrate width={22} height={22} color="#000" />
           </TouchableOpacity>
         </View>
         <Text className="text-black text-3xl font-bold">{timer.title}</Text>
@@ -76,14 +80,18 @@ export default function TimerDetailScreen() {
             className="bg-white p-4 rounded-full"
             onPress={() => (timer.isRunning ? pauseTimer(timer.id) : startTimer(timer.id))}
           >
-            {timer.isRunning ? <Pause size={32} color="#000" /> : <Play size={32} color="#000" />}
+            {timer.isRunning ? (
+              <Pause width={32} height={32} color="#000" />
+            ) : (
+              <Play width={32} height={32} color="#000" />
+            )}
           </TouchableOpacity>
 
           <TouchableOpacity
             className="bg-white p-4 rounded-full"
             onPress={() => resetTimer(timer.id)}
           >
-            <RotateCw size={32} color="#000" />
+            <RotateCw width={32} height={32} color="#000" />
           </TouchableOpacity>
         </View>
       </View>
@@ -94,10 +102,10 @@ export default function TimerDetailScreen() {
       <View className="justify-center items-center flex-col gap-4">
         <View className="flex-row gap-4">
           <TouchableOpacity>
-            <Bell size={22} color="#000" />
+            <Bell width={22} height={22} color="#000" />
           </TouchableOpacity>
           <TouchableOpacity>
-            <Vibrate size={22} color="#000" />
+            <Vibrate width={22} height={22} color="#000" />
           </TouchableOpacity>
         </View>
         <Text className="text-black text-3xl font-bold">{timer.title}</Text>
@@ -108,14 +116,18 @@ export default function TimerDetailScreen() {
           className="bg-white p-4 rounded-full"
           onPress={() => (timer.isRunning ? pauseTimer(timer.id) : startTimer(timer.id))}
         >
-          {timer.isRunning ? <Pause size={32} color="#000" /> : <Play size={32} color="#000" />}
+          {timer.isRunning ? (
+            <Pause width={32} height={32} color="#000" />
+          ) : (
+            <Play width={32} height={32} color="#000" />
+          )}
         </TouchableOpacity>
 
         <TouchableOpacity
           className="bg-white p-4 rounded-full"
           onPress={() => resetTimer(timer.id)}
         >
-          <RotateCw size={32} color="#000" />
+          <RotateCw width={32} height={32} color="#000" />
         </TouchableOpacity>
       </View>
     </View>

@@ -1,12 +1,14 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Settings, Timer, Clock4 } from 'lucide-react-native'
 import TimerScreen from '@/screens/TimerScreen'
 import SettingsScreen from '@/screens/SettingsScreen'
 import StopWatchScreen from '@/screens/StopWatchScreen'
 import TimerAdd from '@/components/timer/TimerAdd'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import { getColors } from '@/theme/colors'
+import Settings from '@/assets/icons/settings.svg'
+import Timer from '@/assets/icons/timer.svg'
+import Clock4 from '@/assets/icons/clock4.svg'
 
 const Tab = createBottomTabNavigator()
 
@@ -42,7 +44,7 @@ export default function BottomTabNavigator() {
         component={TimerScreen}
         options={{
           tabBarLabel: '타이머',
-          tabBarIcon: () => <Timer size={24} color={colors.text} />,
+          tabBarIcon: () => <Timer width={24} height={24} color={colors.text} />,
           headerRight: () => <TimerAdd />,
         }}
       />
@@ -51,7 +53,7 @@ export default function BottomTabNavigator() {
         component={StopWatchScreen}
         options={{
           tabBarLabel: '스톱워치',
-          tabBarIcon: () => <Clock4 size={24} color={colors.text} />,
+          tabBarIcon: () => <Clock4 width={24} height={24} color={colors.text} />,
         }}
       />
       <Tab.Screen
@@ -59,7 +61,7 @@ export default function BottomTabNavigator() {
         component={SettingsScreen}
         options={{
           tabBarLabel: '설정',
-          tabBarIcon: () => <Settings size={24} color={colors.text} />,
+          tabBarIcon: () => <Settings width={24} height={24} color={colors.text} />,
         }}
       />
     </Tab.Navigator>

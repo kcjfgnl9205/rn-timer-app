@@ -2,14 +2,14 @@ import { useLayoutEffect, useState, useEffect } from 'react'
 import { View, TextInput, Alert, TouchableOpacity, Pressable } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import uuid from 'react-native-uuid'
-import { Bell } from 'lucide-react-native'
+import Bell from '@/assets/icons/bell.svg'
 import { useTimerStore } from '@/stores/useTimerStore'
 import { useSettingsStore } from '@/stores/useSettingsStore'
 import TimePickerGroup from '@/components/timer/TimePickerGroup'
 import TimeQuickAddButtons from '@/components/timer/TimeQuickAddButtons'
 import { Text } from '@/components/common/Text'
 import { SelectModal } from '@/components/modal/SelectModal'
-import { addSecondsToTime, playSound, splitTime } from '@/utils/utils'
+import { addSecondsToTime, splitTime, useSoundPlayer } from '@/utils/utils'
 import { getColors } from '@/theme/colors'
 import { Timer, SoundType } from '@/types/type'
 import { SOUND_LIST } from '@/consts/const'
@@ -30,6 +30,8 @@ export default function TimerFormScreen() {
   const colorScheme = useSettingsStore((s) => s.colorScheme)
   const colors = getColors(colorScheme)
   const { addTimer, updateTimer, deleteTimer, timers } = useTimerStore()
+
+  const { playSound } = useSoundPlayer()
 
   // 기존 타이머 데이터 로딩
   useEffect(() => {
@@ -102,14 +104,15 @@ export default function TimerFormScreen() {
     })
   }, [navigation, title, hours, minutes, seconds, sound])
 
-  const handleSoundPlay = async (label: SoundType) => {
+  const handleSelect = (label: SoundType) => {
     setSound(label)
-    await playSound(label)
+    playSound(label)
   }
 
   return (
     <View className="flex-1 p-6">
       <Text className="text-base mb-2">타이머 제목</Text>
+
       <TextInput
         className="border rounded-lg px-4 py-4 mb-8"
         style={{
@@ -136,7 +139,7 @@ export default function TimerFormScreen() {
           className="flex flex-row gap-2 items-center p-4 rounded-lg border"
           style={{ backgroundColor: colors.container, borderColor: colors.border }}
         >
-          <Bell size={22} color={colors.text} />
+          <Bell width={22} height={22} color={colors.text} />
           <Text className="text-base ">{sound}</Text>
         </View>
       </Pressable>
@@ -146,10 +149,7 @@ export default function TimerFormScreen() {
         title="소리 설정"
         items={SOUND_LIST.map((s) => ({ label: s.label, value: s.label }))}
         selectedValue={sound}
-        onSelect={async (label) => {
-          setSound(label)
-          await playSound(label)
-        }}
+        onSelect={(label) => handleSelect(label)}
         onClose={() => setVisible(false)}
       />
     </View>

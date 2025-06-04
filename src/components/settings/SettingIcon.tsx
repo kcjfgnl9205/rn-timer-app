@@ -12,7 +12,7 @@ export default function SettingIcon({ icon: Icon }: Props) {
   const colors = getColors(colorScheme)
   return (
     <View className="p-2 items-center justify-center rounded-lg">
-      <Icon size={20} color={colors.text} />
+      <Icon width={20} height={20} color={colors.text} />
     </View>
   )
 }
