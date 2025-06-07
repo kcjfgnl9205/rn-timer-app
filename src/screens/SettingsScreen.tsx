@@ -102,6 +102,7 @@ export default function SettingsScreen() {
     <FlatList
       data={sections}
       renderItem={({ item }) => <SettingContainer item={item} />}
+      keyExtractor={(item) => String(item.title)}
       className="h-full pt-8"
     />
   )

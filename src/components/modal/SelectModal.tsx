@@ -1,5 +1,4 @@
-// components/common/SelectModal.tsx
-
+import { JSX } from 'react'
 import { FlatList, View, Pressable } from 'react-native'
 import Modal from 'react-native-modal'
 import Check from '@/assets/icons/check.svg'
@@ -10,6 +9,7 @@ import { useSettingsStore } from '@/stores/useSettingsStore'
 interface Item<T> {
   label: string
   value: T
+  icon?: JSX.Element
 }
 
 interface SelectModalProps<T> {
@@ -62,7 +62,11 @@ export function SelectModal<T>({
                   className="flex flex-row justify-between items-center border rounded-lg p-4 mb-2"
                   style={{ borderColor: colors.border }}
                 >
-                  <Text className="text-lg font-semibold">{item.label}</Text>
+                  <View className="flex-row items-center gap-3">
+                    {item.icon && item.icon}
+                    <Text className="text-lg font-semibold">{item.label}</Text>
+                  </View>
+
                   {isSelected && <Check width={22} height={22} color={colors.text} />}
                 </View>
               </Pressable>

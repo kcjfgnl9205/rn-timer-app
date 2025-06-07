@@ -1,3 +1,4 @@
+import { JSX } from 'react'
 import { NativeStackNavigationProp } from '@react-navigation/native-stack'
 
 export type RootStackParamList = {
@@ -18,6 +19,7 @@ export interface Timer {
   remainingTime: number // 일시정지 시 남은 시간 기억용
   totalTime: number // 타이머 총 실행 시간
   sound: SoundType
+  categoryId: string
 }
 
 export interface SettingItem {
@@ -48,3 +50,19 @@ export interface Sound {
   label: SoundType
   sound: any
 }
+
+// 카테고리 색상
+export type Category =
+  | 'none'
+  | 'red'
+  | 'orange'
+  | 'amber'
+  | 'yellow'
+  | 'lime'
+  | 'green'
+  | 'emerald'
+  | 'teal'
+  | 'cyan'
+  | 'blue'
+  | 'indigo'
+  | 'purple'
