@@ -1,5 +1,5 @@
 import { useLayoutEffect, useState, useEffect } from 'react'
-import { View, TextInput, Alert, TouchableOpacity, Pressable } from 'react-native'
+import { View, Alert, TouchableOpacity, Pressable } from 'react-native'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import uuid from 'react-native-uuid'
 import Bell from '@/assets/icons/bell.svg'
@@ -14,6 +14,7 @@ import { getColors } from '@/theme/colors'
 import { Timer, SoundType } from '@/types/type'
 import { SOUND_LIST } from '@/consts/const'
 import CategoryIcon from '@/components/common/CategoryIcon'
+import { Input } from '@/components/common/Input'
 
 export default function TimerFormScreen() {
   const navigation = useNavigation()
@@ -143,17 +144,7 @@ export default function TimerFormScreen() {
     <View className="flex-1 flex flex-col gap-4 p-6">
       <View>
         <Text className="text-base mb-2">타이머 제목</Text>
-        <TextInput
-          className="border rounded-lg px-4 py-4 "
-          style={{
-            borderColor: colors.border,
-            color: colors.text,
-            backgroundColor: colors.container,
-          }}
-          placeholder="예: 공부 타이머"
-          value={title}
-          onChangeText={setTitle}
-        />
+        <Input value={title} onChangeText={setTitle} placeholder="예: 공부 타이머" />
       </View>
       <View>
         <TimePickerGroup

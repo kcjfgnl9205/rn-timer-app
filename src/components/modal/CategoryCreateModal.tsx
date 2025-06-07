@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, TextInput, Pressable } from 'react-native'
+import { View, Pressable } from 'react-native'
 import Modal from 'react-native-modal'
 import { getColors } from '@/theme/colors'
 import { Text } from '@/components/common/Text'
@@ -7,6 +7,7 @@ import { useSettingsStore } from '@/stores/useSettingsStore'
 import { Category } from '@/types/type'
 import CategoryIcon from '@/components/common/CategoryIcon'
 import { CATEGORY_COLORS } from '@/consts/const'
+import { Input } from '@/components/common/Input'
 
 interface CategoryCreateModalProps<T> {
   visible: boolean
@@ -61,31 +62,26 @@ export function CategoryCreateModal<T>({ visible, title, onClose }: CategoryCrea
           </Pressable>
         </View>
 
-        <Text className="text-base mb-2 px-2">이름</Text>
-        <TextInput
-          className="border rounded-lg px-4 py-4 mb-8"
-          style={{
-            borderColor: colors.border,
-            color: colors.text,
-            backgroundColor: colors.container,
-          }}
-          placeholder="예: 공부"
-          value={name}
-          onChangeText={setName}
-        />
-
-        <Text className="text-base mb-2 px-2">색상</Text>
         <View className="flex flex-col gap-4">
-          <View className="flex-row flex-wrap gap-4 p-4">
-            {CATEGORY_COLORS.map((color, i) => (
-              <View className="w-12 h-12" key={color}>
-                <CategoryIcon
-                  color={color}
-                  selected={category === color}
-                  onPress={() => setCategory(color)}
-                />
+          <View>
+            <Text className="text-base mb-2 px-2">이름</Text>
+            <Input value={name} onChangeText={setName} placeholder="예: 공부" />
+          </View>
+          <View>
+            <Text className="text-base mb-2 px-2">색상</Text>
+            <View className="flex flex-col gap-4">
+              <View className="flex-row flex-wrap gap-4 p-4">
+                {CATEGORY_COLORS.map((color, i) => (
+                  <View className="w-12 h-12" key={color}>
+                    <CategoryIcon
+                      color={color}
+                      selected={category === color}
+                      onPress={() => setCategory(color)}
+                    />
+                  </View>
+                ))}
               </View>
-            ))}
+            </View>
           </View>
         </View>
       </View>
